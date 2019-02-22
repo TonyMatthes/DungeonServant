@@ -26,8 +26,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 /* Routes */
+//user information
 app.use('/api/user', userRouter);
+//character info, both player and non-player
 app.use('/api/character', characterRouter);
+
+//a dice roller, not in a route right now, but I may make a router later to handle server game functions
 app.get('/roll',(req,res)=>{
     res.send(rollDice(req.query.number, req.query.sides))
 })
