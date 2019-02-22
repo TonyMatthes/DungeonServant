@@ -15,6 +15,7 @@ import Nav from '../Nav/Nav';
 import AboutPage from '../AboutPage/AboutPage';
 // import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
+import InitiativeTrackerPage from '../InitiativeTracker/InitiativeTrackerPage'
 
 import './App.css';
 
@@ -35,8 +36,18 @@ class App extends Component {
             This is a route anyone can see, no login necessary */}
             <Route
               exact
+              path="/home"
+              component={InitiativeTrackerPage}
+            />
+            <Route
+              exact
               path="/about"
               component={AboutPage}
+            />
+            <Route
+              exact
+              path="/InitiativeTracker"
+              component={InitiativeTrackerPage}
             />
             {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/home will show the UserPage if the user is logged in.
