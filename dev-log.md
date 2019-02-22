@@ -20,8 +20,15 @@ Today's goals are:
 ### Progress
 ---
 I've got the 5e SRD open and I figure the best place to start in the Database is to just keep track of player characters, so I'm going to get player attributes in a table somewhere.
+
 ---
+
 looking through just how deep this is, I've decided to just focus on some MVP goals, coming up with a complete ERD for stretch goals would be counter productive at this point, accomplishing the MVP is actually going to be relatively simple.
+
 ---
+
 I've built some dummy data and a die roller, gonna test those. The die roller is a module in the server so no one messes with it. The server is serving up the dummy data, and the die roller rolls and number of any sided dice and serves up an array. gonnna commit and take a break.
 
+---
+
+didn't actually take a break, wrote an initiative roller instead.
