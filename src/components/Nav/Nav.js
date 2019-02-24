@@ -16,7 +16,7 @@ import {
 import MenuIcon from '@material-ui/icons/Menu'
 import navLinks from './navLinks'
 
-const styles = () => ({
+const styles = theme => ({
   appBar: {
     position: 'relative',
   },

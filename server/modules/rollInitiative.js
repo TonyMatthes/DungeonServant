@@ -4,8 +4,10 @@ const rollDice = require('./rollDice')
 //roll their initiatives, apply modifiers, and order them accordingly
 const rollInitiative = (characters) => {
     let finalList = []
-    for (let character of npcs) {
+    for (let character of characters) {
         finalList.push({ name: character.name, currentInitiative: (Number(rollDice()) + Number(character.initiativeModifier)) })
     }
     return (finalList.sort((a, b) => { return b.currentInitiative - a.currentInitiative }))
 }
+
+module.exports = { rollInitiative }

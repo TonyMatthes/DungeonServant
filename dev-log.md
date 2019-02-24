@@ -21,15 +21,9 @@ Today's goals are:
 
 I've got the 5e SRD open and I figure the best place to start in the Database is to just keep track of player characters, so I'm going to get player attributes in a table somewhere.
 
-
-
 looking through just how deep this is, I've decided to just focus on some MVP goals, coming up with a complete ERD for stretch goals would be counter productive at this point, accomplishing the MVP is actually going to be relatively simple.
 
-
-
 I've built some dummy data and a die roller, gonna test those. The die roller is a module in the server so no one messes with it. The server is serving up the dummy data, and the die roller rolls and number of any sided dice and serves up an array. gonnna commit and take a break.
-
-
 
 didn't actually take a break, wrote an initiative roller instead.
 
@@ -45,6 +39,8 @@ The goals for tonight:
 - work on some components conforming to the wireframes made by Vince.
 
 
-###Progress
+### Progress
 
 I've added an app bar and swipeable nav menu, I've learned a bit about how Material-ui does styling with JSS as well. I can see myself using that. Now I'm going to take a look at what I can do about player and npc cards and stuff, but not before committing.
+
+I got an initiative roller up on the client-side using the code I had already written for the server side. Considering this app is going to mostly be for the DM, I'm not to worried about dice rolls being messed with to not be random. It's actually totally within the DM's mission statement to change rolls if it would be more interesting. If I eventually have players doing their own rolls though, I may want to take that out of their hands. Commiting now and calling it quits for tonight.
