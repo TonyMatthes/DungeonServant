@@ -18,7 +18,7 @@ import navLinks from './navLinks'
 
 const styles = theme => ({
   appBar: {
-    position: 'relative',
+    position: 'sticky',
   },
   flex: {
     display: 'flex',
