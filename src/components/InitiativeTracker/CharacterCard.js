@@ -28,10 +28,16 @@ class CharacterCard extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Card className={this.props.character.isPlayer?classes.playerCard:classes.card}>
+      <Card className={this.props.character.isPlayer ? classes.playerCard : classes.card}>
         <CardContent>
           <Typography className={classes.title} color="textSecondary" gutterBottom>
-            {this.props.character.currentInitiative? 'Current Initiative: ' + this.props.character.currentInitiative: `Initiative:${this.props.character.initiative}, Modifier: ${this.props.character.initiativeModifier<0?this.props.character.initiativeModifier : this.props.character.initiativeModifier}`}
+            {this.props.character.currentInitiative ?
+              'Current Initiative: ' + this.props.character.currentInitiative + ' ' + `Modifier: ${this.props.character.initiativeModifier < 0 ?
+                this.props.character.initiativeModifier :
+                '+'+this.props.character.initiativeModifier}` :
+              `Initiative:${this.props.character.initiative}, Modifier: ${this.props.character.initiativeModifier < 0 ?
+                this.props.character.initiativeModifier :
+                '+'+this.props.character.initiativeModifier}`}
           </Typography>
           <Typography variant="h5" component="h2">
             {this.props.character.name}

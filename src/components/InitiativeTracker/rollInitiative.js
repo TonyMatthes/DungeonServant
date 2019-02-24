@@ -7,7 +7,7 @@ const rollInitiative = (characters) => {
     for (let character of characters) {
         finalList.push({ ...character, currentInitiative: (Number(rollDice()) + Number(character.initiativeModifier)) })
     }
-    return (finalList.sort((a, b) =>  b.currentInitiative - a.currentInitiative ))
+    return (finalList.sort((a, b) =>  b.currentInitiative === a.currentInitiative?b.initiativeModifier-a.initiativeModifier:b.currentInitiative-a.currentInitiative ))
 }
 
 export default rollInitiative
