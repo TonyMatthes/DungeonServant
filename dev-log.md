@@ -36,7 +36,7 @@ After a day with the family, my wife isn't feeling well and going to bed early, 
 The goals for tonight:
 
 - bring in some material-ui, probably an app bar and side navagation drawers
-- work on some components conforming to the wireframes made by Vince.
+- work on some components conforming to the wireframes made by the person I'm making this for.
 
 
 ### Progress
@@ -44,3 +44,20 @@ The goals for tonight:
 I've added an app bar and swipeable nav menu, I've learned a bit about how Material-ui does styling with JSS as well. I can see myself using that. Now I'm going to take a look at what I can do about player and npc cards and stuff, but not before committing.
 
 I got an initiative roller up on the client-side using the code I had already written for the server side. Considering this app is going to mostly be for the DM, I'm not to worried about dice rolls being messed with to not be random. It's actually totally within the DM's mission statement to change rolls if it would be more interesting. If I eventually have players doing their own rolls though, I may want to take that out of their hands. Commiting now and calling it quits for tonight.
+
+
+---
+
+### 2/24/2019
+
+I've done some very minor tweaking on things during the day, but not much of note. I've got another set of eyes on this thing, and I've gotten some feedback. Tonights goals are simply going to be to work on that feedback which includes:
+
+- hide action buttons on cards it can't be used on
+- emphasizing current actor
+- further differentiating player characters and npcs
+
+I'll re-evaluate the trello board after that to determine whether or not there's anything I can do tonight.
+
+### Progress
+
+Actions are hidden, that was quick.

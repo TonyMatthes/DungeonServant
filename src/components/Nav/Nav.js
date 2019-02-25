@@ -36,7 +36,8 @@ const styles = theme => ({
     marginLeft: 10
   },
   iconContainer: {
-    display: 'block'
+    display: 'block',
+    flex:'inherit'
   },
   iconButton: {
     float: 'right'
@@ -65,12 +66,7 @@ class Nav extends Component {
       <AppBar position="absolute" className={classes.appBar}>
         <Toolbar>
           <Grid container spacing={24} alignItems="baseline" >
-            <Grid className={classes.flex} item xs={12} alignItems='baseline' >
-            <div className={classes.iconContainer}>
-                <IconButton className={classes.iconButton} onClick={this.mobileMenuOpen} color="inherit" aria-label="Menu">
-                  <MenuIcon />
-                </IconButton>
-              </div>
+            <Grid className={classes.flex} item xs={12} >
               <div className={classes.inline}>
                 <Typography variant="h6" color="inherit" noWrap>
                   <Link to='/' className={classes.link}>
@@ -78,12 +74,17 @@ class Nav extends Component {
                   </Link>
                 </Typography>
               </div>
+              <div className={classes.iconContainer}>
+                <IconButton className={classes.iconButton} onClick={this.mobileMenuOpen} color="inherit" aria-label="Menu">
+                  <MenuIcon />
+                </IconButton>
+              </div>
               <div>
-                <SwipeableDrawer anchor="left" open={this.state.menuDrawer} onClose={this.mobileMenuClose} >
+                <SwipeableDrawer anchor="right" open={this.state.menuDrawer} onOpen={this.mobileMenuOpen} onClose={this.mobileMenuClose} >
                   <AppBar title="Menu" />
                   <List>
                     {navLinks.map((item, index) => (
-                      <ListItem component={Link} to={{ pathname: item.pathname }} button key={item.index} onClick={this.mobileMenuClose}>
+                      <ListItem component={Link} to={{ pathname: item.pathname }} button key={index} onClick={this.mobileMenuClose}>
                         <ListItemText primary={item.label} />
                       </ListItem>
                     ))}
