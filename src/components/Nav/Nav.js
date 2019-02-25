@@ -65,7 +65,7 @@ class Nav extends Component {
       <AppBar position="absolute" className={classes.appBar}>
         <Toolbar>
           <Grid container spacing={24} alignItems="baseline" >
-            <Grid className={classes.flex} item xs={12} alignItems='baseline' >
+            <Grid className={classes.flex} item xs={12} >
             <div className={classes.iconContainer}>
                 <IconButton className={classes.iconButton} onClick={this.mobileMenuOpen} color="inherit" aria-label="Menu">
                   <MenuIcon />
@@ -79,11 +79,11 @@ class Nav extends Component {
                 </Typography>
               </div>
               <div>
-                <SwipeableDrawer anchor="left" open={this.state.menuDrawer} onClose={this.mobileMenuClose} >
+                <SwipeableDrawer anchor="left" open={this.state.menuDrawer} onOpen={this.mobileMenuOpen} onClose={this.mobileMenuClose} >
                   <AppBar title="Menu" />
                   <List>
                     {navLinks.map((item, index) => (
-                      <ListItem component={Link} to={{ pathname: item.pathname }} button key={item.index} onClick={this.mobileMenuClose}>
+                      <ListItem component={Link} to={{ pathname: item.pathname }} button key={index} onClick={this.mobileMenuClose}>
                         <ListItemText primary={item.label} />
                       </ListItem>
                     ))}
