@@ -35,8 +35,8 @@ class CharacterCard extends Component {
         {this.props.character.isPlayer &&(<CardHeader title="PC"></CardHeader>)}
         <CardContent>
           <Typography className={classes.title} color="textSecondary" gutterBottom>
-            {this.props.character.currentInitiative ?
-              'Current Initiative: ' + this.props.character.currentInitiative + ` Modifier: ${this.props.character.initiativeModifier <= 0 ?
+            {this.props.currentInitiative ?
+              'Current Initiative: ' + this.props.currentInitiative + ` Modifier: ${this.props.character.initiativeModifier <= 0 ?
                 this.props.character.initiativeModifier :
                 '+' + this.props.character.initiativeModifier}` :
               `Initiative:${this.props.character.initiative}, Modifier: ${this.props.character.initiativeModifier <= 0 ?

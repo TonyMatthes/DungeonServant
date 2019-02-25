@@ -80,10 +80,15 @@ class InitiativeTrackerPage extends Component {
           </List>
         </Drawer>
         <main className={classes.content}>
+        <pre>{JSON.stringify(this.state.battleOrder, null, 2)}</pre>
           <Grid container direction="row" alignItems="center" spacing={40}>
             {(this.state.battleOrder || dummydata).map((character, index) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={index} >
-                <CharacterCard key={index} isFirst={index === 0?true:false} character={character} takeTurn={!this.state.battleOrder?()=>alert('set a battle order first'):index === 0?this.takeTurn():()=>alert(`can't take a turn out of turn`)} />
+                <CharacterCard key={index} 
+                isFirst={index === 0?true:false} 
+                character={character.character || character}
+                currentInitiative= {character.currentInitiative}
+                takeTurn={!this.state.battleOrder?()=>alert('set a battle order first'):this.takeTurn()} />
               </Grid>
             ))}
           </Grid>
