@@ -61,3 +61,18 @@ I'll re-evaluate the trello board after that to determine whether or not there's
 ### Progress
 
 Actions are hidden, that was quick.
+
+Next day note here: worked on the other things, got them done, fell asleep on the couch.
+
+---
+
+### 2/25/2019
+
+I'm feeling like garbage and having a hard time getting started today, that being said, I'm ready to work now and I've already done some minor refactoring and accepted a pull request from a collaborator suggesting a redux developer tool new to me. so I figure a good goal for today would be to
+
+- set up redux reducers for player characters and npcs
+- add a form for adding characters
+
+### Progress
+
+In starting to work on the goals above, I've realized it's going to be better to have the database in place and a larger view of the application in order to figure out how those things are going to work. I'm going to do a bit of database planning now.
