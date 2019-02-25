@@ -2,7 +2,7 @@
 //this will be in a database with much more data eventually
 //but we're just working on the initiative thing for MVP
 
-import Character from './Character'
+import Character from '../../gameFunctions/Character'
 
 let playerNames=['Tony','Eric','Bruno','Alex', 'Vince'];
 let initiativeValues = [1,0,-1,-2,3];
