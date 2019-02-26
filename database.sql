@@ -11,11 +11,12 @@ CREATE TABLE "character" (
 	"strength" INT NOT NULL,
 	"dexterity" INT NOT NULL,
 	"constitution" INT NOT NULL,
-	"intellegence" INT NOT NULL,
+	"intelligence" INT NOT NULL,
 	"wisdom" INT NOT NULL,
 	"charisma" INT NOT NULL,
 	"max_hitpoints" INT NOT NULL,
 	"hit_points" INT NOT NULL,
+	"armor_class", INT NOT NULL,
 	"person_id" INT REFERENCES person(id) ON DELETE CASCADE
 );
 --person_id can be null until authentication is brought back in
@@ -33,6 +34,24 @@ CREATE TABLE "character_campaign" (
 	"campain_id" INT REFERENCES campaign(id) ON DELETE CASCADE
 );
 
+CREATE TABLE "monster" (
+    "id" SERIAL PRIMARY KEY,
+    "name" character varying(100) NOT NULL,
+    "strength" integer,
+    "dexterity" integer,
+    "constitution" integer,
+    "intelligence" integer,
+    "wisdom" integer,
+    "charisma" integer,
+    "hit_points" integer,
+    "hit_dice" character varying(6),
+    "armor_class" integer,
+    "challenge_rating" double precision,
+    "actions" jsonb,
+    "special_abilities" jsonb
+);
+
+
 --insert mock data
 INSERT INTO "public"."person"("id","username","password")
 VALUES
@@ -42,13 +61,13 @@ VALUES
 (4,E'Bruno',E'work'),
 (5,E'Alex',E'at all');
 
-INSERT INTO "character"("name","strength","dexterity","constitution","intellegence","wisdom","charisma","max_hitpoints","hit_points","person_id")
+INSERT INTO "character"("name","strength","dexterity","constitution","intelligence","wisdom","charisma","max_hitpoints","hit_points","person_id")
 VALUES
-('grabnar',5,5,5,5,5,5,5,5,1),
-('robgar',10,20,14,16,11,13,20,20,2),
-('gumby',10,10,10,10,10,10,20,20,3),
-('Mr. Pirate',3,19,14,14,14,14,15,15,4)
-('Brumble', 5,5,5,5,5,5,5,5,5)
+('grabnar',5,5,5,5,5,5,5,5,15,1),
+('robgar',10,20,14,16,11,13,20,20,15,2),
+('gumby',10,10,10,10,10,10,20,20,15,3),
+('Mr. Pirate',3,19,14,14,14,14,15,15,15,4)
+('Brumble', 5,5,5,5,5,5,5,5,15,5)
 
 INSERT INTO "public"."campaign"("id","name","dungeon_master_id")
 VALUES
@@ -61,3 +80,20 @@ VALUES
 (3,1),
 (4,1),
 (5,1);
+
+-- copy command for included monster csv file
+COPY monster("id",
+		"name",
+        "strength",
+        "dexterity",
+        "constitution",
+        "intelligence",
+        "wisdom",
+        "charisma",
+        "hit_points",
+        "hit_dice",
+        "armor_class",
+        "challenge_rating",
+        "actions",
+        "special_abilities")
+        FROM '/YOUR/FILE/PATH/HERE.csv' DELIMITER ',' CSV HEADER;

@@ -13,6 +13,7 @@ const rollDice = require('./modules/rollDice')
 // Route includes
 const userRouter = require('./routes/user.router');
 const characterRouter = require('./routes/character.router');
+const monsterRouter = require('./routes/monster.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -28,8 +29,10 @@ app.use(passport.session());
 /* Routes */
 //user information
 app.use('/api/user', userRouter);
-//character info, both player and non-player
+//player character info
 app.use('/api/character', characterRouter);
+//monster and npc info
+app.use('/api/monster', monsterRouter);
 
 //a dice roller, not in a route right now, but I may make a router later to handle server game functions
 app.get('/roll',(req,res)=>{

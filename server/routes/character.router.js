@@ -15,6 +15,7 @@ router.get('/', (req, res) => {
         res.sendStatus(500)
     })
 });
+
 //get a specific character
 router.get('/:id', (req, res) => {
     pool.query(
@@ -37,23 +38,25 @@ router.post('/', (req, res) => {
         "strength",
         "dexterity",
         "constitution",
-        "intellegence",
+        "intelligence",
         "wisdom",
         "charisma",
         "max_hit_points",
         "hit_points",
-        "person_id")
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+        "person_id",
+        "armor_class")
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
         [req.body.name,
         req.body.strength,
         req.body.dexterity,
         req.body.constitution,
-        req.body.intellegence,
+        req.body.intelligence,
         req.body.wisdom,
         req.body.charisma,
         req.body.max_hit_points,
         req.body.hit_points,
-        req.body.person_id]
+        req.body.person_id,
+        req.body.armor_class]
     ).then((results) => {
         res.sendStatus(201)
     }).catch((error) => {
@@ -62,6 +65,7 @@ router.post('/', (req, res) => {
     })
 });
 
+//update character
 router.put('/', (req, res) => {
     pool.query(
         `UPDATE "character" 
@@ -69,24 +73,26 @@ router.put('/', (req, res) => {
         "strength"=$2,
         "dexterity"=$3,
         "constitution"=$4,
-        "intellegence"=$5,
+        "intelligence"=$5,
         "wisdom"=$6,
         "charisma"=$7,
         "max_hit_points"=$8,
         "hit_points"=$9,
-        "person_id"=$10
-        WHERE "id" =$11
+        "person_id"=$10,
+        "armor_class"=$11
+        WHERE "id" =$12
         `,
         [req.body.name,
         req.body.strength,
         req.body.dexterity,
         req.body.constitution,
-        req.body.intellegence,
+        req.body.intelligence,
         req.body.wisdom,
         req.body.charisma,
         req.body.max_hit_points,
         req.body.hit_points,
         req.body.person_id,
+        req.body.armor_class,
         req.body.id]
 
     ).then((results) => {
@@ -96,6 +102,7 @@ router.put('/', (req, res) => {
     })
 })
 
+//delete character
 router.delete('/:id', (req, res) => {
     pool.query(`DELETE FROM "character" WHERE "id"=$1`, [req.params.id]
     ).then((results) => {
