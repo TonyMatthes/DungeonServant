@@ -2,15 +2,26 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-//get all monsters name and id
+//get all monsters name, challenge rating and id
 router.get('/', (req, res) => {
-    pool.query(`SELECT "name","id" FROM "monster"`)
+    !req.query.name?
+    pool.query(`SELECT "name","challenge_rating","id" FROM "monster"
+                ORDER BY "challenge_rating"`)
         .then((results) => {
             res.send(results.rows)
         }).catch((error) => {
             console.log('monster GET error', error)
             res.sendStatus(500)
-        });
+        }):
+        pool.query(`SELECT * FROM "monster"
+                WHERE LOWER("name")=LOWER($1)`,[req.query.name])
+        .then((results) => {
+            res.send(results.rows)
+        }).catch((error) => {
+            console.log('monster GET error', error)
+            res.sendStatus(500)
+        })
+
 });
 
 router.get('/:id', (req, res) => {
