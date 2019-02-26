@@ -1,5 +1,63 @@
+--table Creation
 CREATE TABLE "person" (
     "id" SERIAL PRIMARY KEY,
     "username" VARCHAR (80) UNIQUE NOT NULL,
     "password" VARCHAR (1000) NOT NULL
 );
+
+CREATE TABLE "character" (
+	"id" SERIAL PRIMARY KEY,
+	"name" VARCHAR (100) NOT NULL,
+	"strength" INT NOT NULL,
+	"dexterity" INT NOT NULL,
+	"constitution" INT NOT NULL,
+	"intellegence" INT NOT NULL,
+	"wisdom" INT NOT NULL,
+	"charisma" INT NOT NULL,
+	"max_hitpoints" INT NOT NULL,
+	"hit_points" INT NOT NULL,
+	"person_id" INT REFERENCES person(id) ON DELETE CASCADE
+);
+--person_id can be null until authentication is brought back in
+
+CREATE TABLE "campaign" (
+    "id" SERIAL PRIMARY KEY,
+    "name" VARCHAR (80) UNIQUE NOT NULL,
+    "dungeon_master_id" INT REFERENCES person(id) ON DELETE CASCADE
+);
+--person_id can be null until authentication is brought back in
+
+CREATE TABLE "character_campaign" (
+	"id" SERIAL PRIMARY KEY,
+	"character_id" INT REFERENCES character(id) ON DELETE CASCADE,
+	"campain_id" INT REFERENCES campaign(id) ON DELETE CASCADE
+);
+
+--insert mock data
+INSERT INTO "public"."person"("id","username","password")
+VALUES
+(1,E'Tony',E'these'),
+(2,E'Eric',E'passwords'),
+(3,E'Vince',E'won''t'),
+(4,E'Bruno',E'work'),
+(5,E'Alex',E'at all');
+
+INSERT INTO "character"("name","strength","dexterity","constitution","intellegence","wisdom","charisma","max_hitpoints","hit_points","person_id")
+VALUES
+('grabnar',5,5,5,5,5,5,5,5,1),
+('robgar',10,20,14,16,11,13,20,20,2),
+('gumby',10,10,10,10,10,10,20,20,3),
+('Mr. Pirate',3,19,14,14,14,14,15,15,4)
+('Brumble', 5,5,5,5,5,5,5,5,5)
+
+INSERT INTO "public"."campaign"("id","name","dungeon_master_id")
+VALUES
+(1,E'mock campagin',NULL);
+
+INSERT INTO "public"."character_campaign"("character_id","campain_id")
+VALUES
+(1,1),
+(2,1),
+(3,1),
+(4,1),
+(5,1);

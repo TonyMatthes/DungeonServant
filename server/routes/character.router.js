@@ -4,18 +4,105 @@ const dummyData = require('../modules/dummydata')
 const router = express.Router();
 
 
-/**
- * GET route template
- */
+//get all characters
 router.get('/', (req, res) => {
-    res.send(dummyData)
+    pool.query(
+        `SELECT * FROM "character"`
+    ).then((results) => {
+        res.send(results.rows)
+    }).catch((error) => {
+        console.log('character GET error', error)
+        res.sendStatus(500)
+    })
+});
+//get a specific character
+router.get('/:id', (req, res) => {
+    pool.query(
+        `SELECT * FROM "character" WHERE "id" = $1`, [req.params.id]
+    ).then((results) => {
+        results.rows[0] ? res.send(results.rows[0]) : res.sendStatus(404)
+    }).catch((error) => {
+        console.log('character GET error', error)
+        res.sendStatus(500)
+    })
 });
 
-/**
- * POST route template
- */
+
+//post a new character
 router.post('/', (req, res) => {
-
+    console.log(req.body)
+    pool.query(
+        `INSERT INTO "character"
+        ("name",
+        "strength",
+        "dexterity",
+        "constitution",
+        "intellegence",
+        "wisdom",
+        "charisma",
+        "max_hit_points",
+        "hit_points",
+        "person_id")
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+        [req.body.name,
+        req.body.strength,
+        req.body.dexterity,
+        req.body.constitution,
+        req.body.intellegence,
+        req.body.wisdom,
+        req.body.charisma,
+        req.body.max_hit_points,
+        req.body.hit_points,
+        req.body.person_id]
+    ).then((results) => {
+        res.sendStatus(201)
+    }).catch((error) => {
+        console.log('character POST error', error)
+        res.sendStatus(500)
+    })
 });
+
+router.put('/', (req, res) => {
+    pool.query(
+        `UPDATE "character" 
+        SET "name"=$1, 
+        "strength"=$2,
+        "dexterity"=$3,
+        "constitution"=$4,
+        "intellegence"=$5,
+        "wisdom"=$6,
+        "charisma"=$7,
+        "max_hit_points"=$8,
+        "hit_points"=$9,
+        "person_id"=$10
+        WHERE "id" =$11
+        `,
+        [req.body.name,
+        req.body.strength,
+        req.body.dexterity,
+        req.body.constitution,
+        req.body.intellegence,
+        req.body.wisdom,
+        req.body.charisma,
+        req.body.max_hit_points,
+        req.body.hit_points,
+        req.body.person_id,
+        req.body.id]
+
+    ).then((results) => {
+        res.sendStatus(201)
+    }).catch((error) => {
+        console.log('character PUT error ', error)
+    })
+})
+
+router.delete('/:id', (req, res) => {
+    pool.query(`DELETE FROM "character" WHERE "id"=$1`, [req.params.id]
+    ).then((results) => {
+        res.sendStatus(201)
+    }).catch((error) => {
+        console.log('character DELETE error ', error)
+    })
+})
 
 module.exports = router;
