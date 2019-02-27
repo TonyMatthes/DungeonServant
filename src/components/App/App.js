@@ -13,7 +13,7 @@ import Nav from '../Nav/Nav';
 import AboutPage from '../AboutPage/AboutPage';
 // import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
-import InitiativeTrackerPage from '../InitiativeTracker/InitiativeTrackerPage'
+import EncounterManagerPage from '../EncounterManager/EncounterManagerPage';
 
 // import './App.css';
 
@@ -35,7 +35,7 @@ class App extends Component {
             <Route
               exact
               path="/home"
-              component={InitiativeTrackerPage}
+              component={EncounterManagerPage}
             />
             <Route
               exact
@@ -44,8 +44,8 @@ class App extends Component {
             />
             <Route
               exact
-              path="/InitiativeTracker"
-              component={InitiativeTrackerPage}
+              path="/encounterManager"
+              component={EncounterManagerPage}
             />
             {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/home will show the UserPage if the user is logged in.
