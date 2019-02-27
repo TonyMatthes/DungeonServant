@@ -14,7 +14,6 @@ CREATE TABLE "character" (
 	"intelligence" INT NOT NULL,
 	"wisdom" INT NOT NULL,
 	"charisma" INT NOT NULL,
-	"max_hitpoints" INT NOT NULL,
 	"hit_points" INT NOT NULL,
 	"armor_class", INT NOT NULL,
 	"person_id" INT REFERENCES person(id) ON DELETE CASCADE
@@ -31,7 +30,8 @@ CREATE TABLE "campaign" (
 CREATE TABLE "character_campaign" (
 	"id" SERIAL PRIMARY KEY,
 	"character_id" INT REFERENCES character(id) ON DELETE CASCADE,
-	"campain_id" INT REFERENCES campaign(id) ON DELETE CASCADE
+	"campain_id" INT REFERENCES campaign(id) ON DELETE CASCADE,
+    "current_hit_points"
 );
 
 CREATE TABLE "monster" (
@@ -53,21 +53,22 @@ CREATE TABLE "monster" (
 
 
 --insert mock data
-INSERT INTO "public"."person"("id","username","password")
+INSERT INTO "public"."person"(,"username","password")
 VALUES
-(1,E'Tony',E'these'),
-(2,E'Eric',E'passwords'),
-(3,E'Vince',E'won''t'),
-(4,E'Bruno',E'work'),
-(5,E'Alex',E'at all');
+('Tony','these'),
+('Eric','passwords'),
+('Vince','won''t'),
+('Bruno','work'),
+('Alex','at all'),
+('Troy', 'noauth';
 
 INSERT INTO "character"("name","strength","dexterity","constitution","intelligence","wisdom","charisma","max_hitpoints","hit_points","person_id")
 VALUES
-('grabnar',5,5,5,5,5,5,5,5,15,1),
-('robgar',10,20,14,16,11,13,20,20,15,2),
-('gumby',10,10,10,10,10,10,20,20,15,3),
-('Mr. Pirate',3,19,14,14,14,14,15,15,15,4)
-('Brumble', 5,5,5,5,5,5,5,5,15,5)
+('grabnar',5,5,5,5,5,5,5,15,1),
+('robgar',10,20,14,16,11,13,20,15,2),
+('gumby',10,10,10,10,10,10,20,15,3),
+('Mr. Pirate',3,19,14,14,14,14,15,15,4)
+('Brumble', 5,5,5,5,5,5,5,15,5)
 
 INSERT INTO "public"."campaign"("id","name","dungeon_master_id")
 VALUES
@@ -75,13 +76,14 @@ VALUES
 
 INSERT INTO "public"."character_campaign"("character_id","campain_id")
 VALUES
-(1,1),
-(2,1),
-(3,1),
-(4,1),
-(5,1);
+(1,1,5),
+(2,1,5),
+(3,1,5),
+(4,1,5),
+(5,1,5);
 
 -- copy command for included monster csv file
+--replace /YOUR/FILE/PATH/HERE with your file path
 COPY monster("id",
 		"name",
         "strength",
@@ -96,4 +98,4 @@ COPY monster("id",
         "challenge_rating",
         "actions",
         "special_abilities")
-        FROM '/YOUR/FILE/PATH/HERE.csv' DELIMITER ',' CSV HEADER;
+        FROM '/YOUR/FILE/PATH/monster.csv' DELIMITER ',' CSV HEADER;

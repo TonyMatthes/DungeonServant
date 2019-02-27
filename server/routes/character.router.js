@@ -1,10 +1,9 @@
 const express = require('express');
 const pool = require('../modules/pool');
-const dummyData = require('../modules/dummydata')
 const router = express.Router();
 
 
-//get all characters
+//get all player characters
 router.get('/', (req, res) => {
     pool.query(
         `SELECT * FROM "character"`
@@ -15,7 +14,30 @@ router.get('/', (req, res) => {
         res.sendStatus(500)
     })
 });
-
+//get all player characters in a given campaign
+router.get('/campaign/:campaignId',(req,res)=>{
+    pool.query(
+        `SELECT "character"."id", 
+                "character"."name", 
+                "character"."strength",
+                "character"."dexterity",
+                "character"."constitution",
+                "character"."intelligence",
+                "character"."wisdom",
+                "character"."charisma",
+                "character"."hit_points",
+                "character_campaign"."current_hit_points",
+                "character"."armor_class" 
+        FROM "character"
+        JOIN "character_campaign" ON "character"."id"="character_campaign"."character_id"
+        WHERE "campaign_id"=$1;`,[req.params.campaignId]
+    ).then((results) => {
+        res.send(results.rows)
+    }).catch((error) => {
+        console.log('character GET error', error)
+        res.sendStatus(500)
+    })
+});
 //get a specific character
 router.get('/:id', (req, res) => {
     pool.query(
