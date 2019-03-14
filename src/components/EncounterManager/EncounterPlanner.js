@@ -9,12 +9,21 @@ class EncounterPlanner extends Component{
     }
     render(){
         return(
-            <h2>this is the encounter planner component</h2>
+            <>
+            <ul>
+                {this.props.characters.player.map(pc => <li>{pc.name} <button onClick={this.props.addEncounterCharacter({...pc, isPlayer:true })}>add to encounter</button></li>)}
+            </ul>
+            <ul>
+                {this.props.characters.nonPlayer.map(character => <li>{character.name} <button onClick={this.props.addEncounterCharacter({...character, isPlayer:false })}>add to encounter</button></li>)}
+            </ul>
+            </>
         )
     }
 }
 
-export default EncounterPlanner
+const mapStateToProps = ({characters}) => ({characters})
+
+export default connect (mapStateToProps) (EncounterPlanner)
 
 //this component will be a tool for the DM to set up encounters. It will get players currently playing,
 //and have a monster/npc selector for the DM to pick enemies.

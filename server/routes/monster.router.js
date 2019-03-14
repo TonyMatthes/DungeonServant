@@ -5,7 +5,7 @@ const router = express.Router();
 //get all monsters name, challenge rating and id
 router.get('/', (req, res) => {
     !req.query.name?
-    pool.query(`SELECT "name","challenge_rating","id" FROM "monster"
+    pool.query(`SELECT "name","challenge_rating","id","dexterity" FROM "monster"
                 ORDER BY "challenge_rating"`)
         .then((results) => {
             res.send(results.rows)

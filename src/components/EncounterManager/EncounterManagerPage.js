@@ -13,7 +13,6 @@ import {
 } from '@material-ui/core';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import dummydata from './dummydata';
 import rollInitiative from './rollInitiative';
 import ViewSwitcher from './ViewSwitcher';
 
@@ -41,14 +40,25 @@ const styles = theme => ({
 class EncounterManagementPage extends Component {
 
   state = {
-    battleOrder: null
+    battleOrder: null,
+    encounterCharacters:[],
+
   };
 
+  componentDidMount(){
+    this.props.dispatch({type:'FETCH_NON_PLAYER_CHARACTERS'})
+    this.props.dispatch({type:'FETCH_PLAYER_CHARACTERS',payload:1})
+    //the payload will contain the campaign number that the DM logged in has
+  }
+
   setBattleOrder = (characters) => () => {
-    this.setState({ battleOrder: rollInitiative(characters) })
+    this.setState({ battleOrder: rollInitiative(this.state.encounterCharacters) })
   }
   takeTurn = () => () => {
     this.setState({ battleOrder: this.state.battleOrder.concat(this.state.battleOrder.splice(0, 1)) })
+  }
+  addEncounterCharacter=(character)=>()=>{
+    this.setState({encounterCharacters: [...this.state.encounterCharacters, character] })
   }
 
   render() {
@@ -77,15 +87,17 @@ class EncounterManagementPage extends Component {
         <main className={classes.content}>
           {/* <pre>{JSON.stringify(this.state.battleOrder, null, 2)}</pre> */}
           <ViewSwitcher
-            setBattleOrder={this.setBattleOrder(dummydata)}
+            setBattleOrder={this.setBattleOrder(this.state.encounterCharacters)}
             takeTurn={this.takeTurn}
-            battleOrder={this.state.battleOrder} />
+            battleOrder={this.state.battleOrder} 
+            encounterCharacters={this.state.encounterCharacters}
+            addEncounterCharacter = {this.addEncounterCharacter}/>
 
         </main>
       </div>
     );
   }
 }
-const mapReduxStateToProps = ({ encounterMode }) => ({ encounterMode })
+const mapReduxStateToProps = ({ encounterMode, characters }) => ({ encounterMode, characters })
 
 export default withStyles(styles)(connect(mapReduxStateToProps)(EncounterManagementPage));

@@ -3,7 +3,6 @@ import {
   Grid,
 } from '@material-ui/core';
 
-import dummydata from './dummydata'
 import CharacterCard from './CharacterCard';
 
 //this will look a lot better later
@@ -14,7 +13,7 @@ class InitiativeTracker extends Component {
       <>
         <button onClick={this.props.setBattleOrder}>set order</button>
         <Grid container direction="row" alignItems="center" spacing={40}>
-          {(this.props.battleOrder || dummydata).map((character, index) => (
+          {(this.props.battleOrder || this.props.encounterCharacters).map((character, index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={index} >
               <CharacterCard key={index}
                 // determines whether or not the character can act

@@ -5,11 +5,11 @@ import rollDice from '../../gameFunctions/rollDice'
 const rollInitiative = (characters) => {
     let finalList = []
     for (let character of characters) {
-        finalList.push({ character, currentInitiative: (Number(rollDice()) + Number(character.initiativeModifier)) })
+        finalList.push({ character, currentInitiative: (Number(rollDice()) + (Math.floor((character.dexterity - 10) / 2))) })
     }
     return (finalList.sort((a, b) =>
         b.currentInitiative === a.currentInitiative ?
-            b.initiativeModifier - a.initiativeModifier :
+            (Math.floor((b.dexterity - 10) / 2)) - (Math.floor((a.dexterity - 10) / 2)) :
             b.currentInitiative - a.currentInitiative))
 }
 

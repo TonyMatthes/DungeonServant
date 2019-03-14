@@ -36,18 +36,18 @@ class CharacterCard extends Component {
         <CardContent>
           <Typography className={classes.title} color="textSecondary" gutterBottom>
             {this.props.currentInitiative ?
-              'Current Initiative: ' + this.props.currentInitiative + ` Modifier: ${this.props.character.initiativeModifier <= 0 ?
-                this.props.character.initiativeModifier :
-                '+' + this.props.character.initiativeModifier}` :
-              `Initiative:${this.props.character.initiative}, Modifier: ${this.props.character.initiativeModifier <= 0 ?
-                this.props.character.initiativeModifier :
-                '+' + this.props.character.initiativeModifier}`}
+              'Initiative: ' + this.props.currentInitiative + ` Modifier: ${(Math.floor((this.props.character.dexterity-10)/2))<= 0 ?
+                Math.floor((this.props.character.dexterity-10)/2) :
+                '+' + Math.floor((this.props.character.dexterity-10)/2)}` :
+              `Dexterity:${this.props.character.dexterity}, Initiative Modifier: ${(Math.floor((this.props.character.dexterity-10)/2)) <= 0 ?
+                (Math.floor((this.props.character.dexterity-10)/2)) :
+                '+' + (Math.floor((this.props.character.dexterity-10)/2))}`}
           </Typography>
           <Typography variant="h5" component="h2">
             {this.props.character.name}
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
-            HP: {this.props.character.hP} / {this.props.character.maxHP}
+            HP: {this.props.character.current_hit_points} / {this.props.character.hit_points}
           </Typography>
           <Typography component="p">
             {this.props.character.name}'s character info or something
