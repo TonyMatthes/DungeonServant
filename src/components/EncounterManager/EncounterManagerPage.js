@@ -52,13 +52,13 @@ class EncounterManagementPage extends Component {
   }
 
   setBattleOrder = (characters) => () => {
-    this.setState({ battleOrder: rollInitiative(this.state.encounterCharacters) })
+    this.setState({ battleOrder: rollInitiative(characters) })
   }
   takeTurn = () => () => {
     this.setState({ battleOrder: this.state.battleOrder.concat(this.state.battleOrder.splice(0, 1)) })
   }
-  addEncounterCharacter=(character)=>()=>{
-    this.setState({encounterCharacters: [...this.state.encounterCharacters, character] })
+  confirmParticipants=(characters)=>()=>{
+    this.setState({encounterCharacters: characters })
   }
 
   render() {
@@ -91,7 +91,8 @@ class EncounterManagementPage extends Component {
             takeTurn={this.takeTurn}
             battleOrder={this.state.battleOrder} 
             encounterCharacters={this.state.encounterCharacters}
-            addEncounterCharacter = {this.addEncounterCharacter}/>
+            addEncounterCharacter = {this.addEncounterCharacter}
+            confirmParticipants = {this.confirmParticipants}/>
 
         </main>
       </div>
