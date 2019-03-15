@@ -76,14 +76,14 @@ class EncounterPlanner extends Component {
         <button onClick={this.props.confirmParticipants(this.state.characterList)}>confirm participants</button>
         <ul>
           {this.props.characters.player.map(pc =>
-            <li>
+            <li key={pc.id}>
               {pc.name}
               <button onClick={this.addToEncounter({ ...pc, isPlayer: true })}>add to encounter</button>
             </li>)}
         </ul>
         <ul>
           {this.props.characters.nonPlayer.map(character =>
-            <li>
+            <li key={character.name}>
               {character.name}
               <button onClick={this.handleClickOpen(character)}>add to encounter</button>
             </li>)}
