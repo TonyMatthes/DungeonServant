@@ -5,6 +5,7 @@ import {
   CardActions,
   CardContent,
   CardHeader,
+  Divider,
   Typography,
   withStyles
 } from '@material-ui/core/';
@@ -32,7 +33,8 @@ class CharacterCard extends Component {
     const { classes } = this.props;
     return (
       <Card className={this.props.character.isPlayer ? classes.playerCard : classes.card}>
-        {this.props.character.isPlayer &&(<CardHeader title="PC"></CardHeader>)}
+        <CardHeader title={this.props.character.name} subheader={this.props.character.player || this.props.character.type}/>
+        <Divider/>
         <CardContent>
           <Typography className={classes.title} color="textSecondary" gutterBottom>
             {this.props.currentInitiative ?
@@ -43,8 +45,8 @@ class CharacterCard extends Component {
                 (Math.floor((this.props.character.dexterity-10)/2)) :
                 '+' + (Math.floor((this.props.character.dexterity-10)/2))}`}
           </Typography>
-          <Typography variant="h5" component="h2">
-            {this.props.character.name}
+          <Typography variant="h5" component="h5">
+            
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
             HP: {this.props.character.current_hit_points} / {this.props.character.hit_points}

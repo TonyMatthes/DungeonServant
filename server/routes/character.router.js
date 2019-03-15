@@ -27,9 +27,11 @@ router.get('/campaign/:campaignId',(req,res)=>{
                 "character"."charisma",
                 "character"."hit_points",
                 "character_campaign"."current_hit_points",
-                "character"."armor_class" 
+                "character"."armor_class",
+                ("username")"player"
         FROM "character"
         JOIN "character_campaign" ON "character"."id"="character_campaign"."character_id"
+        JOIN "person" ON "person"."id"="character"."person_id"
         WHERE "campaign_id"=$1;`,[req.params.campaignId]
     ).then((results) => {
         res.send(results.rows)

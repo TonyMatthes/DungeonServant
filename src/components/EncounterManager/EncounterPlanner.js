@@ -15,21 +15,27 @@ import rollDice from '../../gameFunctions/rollDice'
 //
 class EncounterPlanner extends Component {
   state = {
-    characterList:[],
-    characterToAdd:{},
-    editorOpen:false,
+    characterList: [],
+    characterToAdd: {
+      name: '',
+      hit_points: 0,
+    },
+    editorOpen: false,
   }
 
   addToEncounter = (character) => () => {
     this.setState({
       characterList: [...this.state.characterList, character],
-      characterToAdd:{},
-      editorOpen:false,
+      characterToAdd: {
+        name: '',
+        hit_points: 0,
+      },
+      editorOpen: false,
     })
   }
 
   handleClickOpen = (character) => () => {
-    this.setState({ editorOpen: true, characterToAdd: character });
+    this.setState({ editorOpen: true, characterToAdd: { ...character, type: character.name } });
   };
 
   handleClose = () => {
@@ -50,8 +56,14 @@ class EncounterPlanner extends Component {
   }
 
   rollHP = (character) => () => {
-    this.setState({ characterToAdd: 
-      { ...this.state.characterToAdd, hit_points: rollDice(character.hit_dice).reduce((accumulator,currentvalue)=>accumulator+currentvalue) } })
+    this.setState({
+      characterToAdd:
+      {
+        ...this.state.characterToAdd,
+        hit_points: (rollDice(character.hit_dice).reduce((accumulator, currentvalue) => accumulator + currentvalue)) +
+          ((Math.floor((this.state.characterToAdd.constitution - 10) / 2) * (this.state.characterToAdd.hit_dice.match(/\d+/g))[0]))
+      }
+    })
   }
 
   render() {
@@ -101,7 +113,7 @@ class EncounterPlanner extends Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose}>Cancel</Button>
-            <Button onClick={this.addToEncounter({...this.state.characterToAdd, current_hit_points: this.state.characterToAdd.hit_points})}>Submit</Button>
+            <Button onClick={this.addToEncounter({ ...this.state.characterToAdd, current_hit_points: this.state.characterToAdd.hit_points })}>Submit</Button>
           </DialogActions>
 
         </Dialog>
