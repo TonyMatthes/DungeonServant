@@ -9,6 +9,7 @@ import {
   Typography,
   withStyles
 } from '@material-ui/core/';
+import {connect} from 'react-redux';
 
 const styles = {
   // card: {
@@ -32,8 +33,8 @@ class CharacterCard extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Card className={this.props.character.isPlayer ? classes.playerCard : classes.card}>
-        <CardHeader title={this.props.character.name} subheader={this.props.character.player || this.props.character.type}/>
+      <Card >
+        <CardHeader className={this.props.character.isPlayer &&(classes.playerCard)} title={this.props.character.name} subheader={this.props.character.player || this.props.character.type}/>
         <Divider/>
         <CardContent>
           <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -53,7 +54,7 @@ class CharacterCard extends Component {
           </Typography>
         </CardContent>
         {this.props.isFirst && (<CardActions>
-          <Button size="small" onClick={this.props.takeTurn}>Act</Button>
+          <Button size="small" onClick={()=>this.props.dispatch({type:'TAKE_TURN'})}>Act</Button>
           <Button size="small">hold action</Button>
         </CardActions>)}
       </Card>
@@ -61,4 +62,4 @@ class CharacterCard extends Component {
   }
 }
 
-export default withStyles(styles)(CharacterCard);
+export default withStyles(styles)(connect()(CharacterCard));

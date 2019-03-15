@@ -1,4 +1,4 @@
-import rollDice from '../../gameFunctions/rollDice'
+import rollDice from './rollDice'
 
 //rollInitiative will take in an array of characters in a conflict,
 //roll their initiatives, apply modifiers, and order them accordingly

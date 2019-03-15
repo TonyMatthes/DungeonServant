@@ -73,7 +73,7 @@ class EncounterPlanner extends Component {
         <ul>
           {this.state.characterList.map((character, index) => <li key={index}>{character.name}</li>)}
         </ul>
-        <button onClick={this.props.confirmParticipants(this.state.characterList)}>confirm participants</button>
+        <button onClick={()=>this.props.dispatch({type:'SET_BATTLE_PARTICIPANTS',payload:this.state.characterList})}>confirm participants</button>
         <ul>
           {this.props.characters.player.map(pc =>
             <li key={pc.id}>

@@ -4,16 +4,14 @@ import {
   withStyles,
   Drawer,
   List,
-  Typography,
   Divider,
-  Grid,
   ListItem,
   ListItemIcon,
   ListItemText,
 } from '@material-ui/core';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import rollInitiative from './rollInitiative';
+import rollInitiative from '../../gameFunctions/rollInitiative';
 import ViewSwitcher from './ViewSwitcher';
 
 const drawerWidth = 150;
@@ -91,7 +89,6 @@ class EncounterManagementPage extends Component {
             takeTurn={this.takeTurn}
             battleOrder={this.state.battleOrder} 
             encounterCharacters={this.state.encounterCharacters}
-            addEncounterCharacter = {this.addEncounterCharacter}
             confirmParticipants = {this.confirmParticipants}/>
 
         </main>

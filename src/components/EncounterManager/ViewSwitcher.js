@@ -27,5 +27,5 @@ const ViewSwitcher = (props) => {
 
 }
 
-const mapReduxStateToProps = ({ encounterMode }) => ({ mode: encounterMode })
+const mapReduxStateToProps = ({ encounterMode }) => ({ mode: encounterMode.mode })
 export default connect(mapReduxStateToProps)(ViewSwitcher)
