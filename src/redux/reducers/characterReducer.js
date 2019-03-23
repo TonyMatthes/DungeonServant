@@ -1,10 +1,17 @@
 import { combineReducers } from 'redux';
+import NPC from '../../gameFunctions/CharacterClasses/NPC';
+import Player from '../../gameFunctions/CharacterClasses/Player'
 
 // player holds an array of player character objects
 const player = (state = [], action) => {
     switch (action.type) {
         case 'SET_PLAYER_CHARACTERS':
-            return action.payload
+        let playerCharacters = []
+        for (let character of action.payload) {
+            let newPlayerCharacter = new Player(character)
+            playerCharacters.push(newPlayerCharacter)
+        }
+            return playerCharacters
         default:
             return state;
     }
@@ -14,7 +21,12 @@ const player = (state = [], action) => {
 const nonPlayer = (state = [], action) => {
     switch (action.type) {
         case 'SET_NON_PLAYER_CHARACTERS':
-            return action.payload
+        let npcs = []
+        for (let character of action.payload) {
+            let npc = new NPC(character)
+            npcs.push(npc)
+        }
+            return npcs
         default:
             return state;
 

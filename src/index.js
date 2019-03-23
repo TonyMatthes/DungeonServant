@@ -4,8 +4,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
-import { CssBaseline } from '@material-ui/core'
-
+import { CssBaseline, MuiThemeProvider, createMuiTheme } from '@material-ui/core'
 import rootReducer from './redux/reducers'; // imports ./redux/reducers/index.js
 import rootSaga from './redux/sagas'; // imports ./redux/sagas/index.js
 
@@ -41,14 +40,32 @@ const store = createStore(rootReducer, {}, composedEnhancers)
 
 // tells the saga middleware to use the rootSaga
 // rootSaga contains all of our other sagas
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#df78ef',
+      main: '#ab47bc',
+      dark: '#790e8b',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      light: '#bdf478',
+      main: '#8ac148',
+      dark: '#599014',
+      contrastText: '##000000',
+    },
+  },
+});
+
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>
-    <>
+    <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <App />
-    </>
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById('react-root'),
 );

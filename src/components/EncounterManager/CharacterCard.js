@@ -31,28 +31,29 @@ class CharacterCard extends Component {
 
 
   render() {
-    const { classes } = this.props;
+    const { classes, character } = this.props;
     return (
       <Card >
-        <CardHeader className={this.props.character.isPlayer &&(classes.playerCard)} title={this.props.character.name} subheader={this.props.character.player || this.props.character.type}/>
+        <CardHeader className={character.player &&(classes.playerCard)} title={character.individualName || character.name } subheader={character.player || character.name}/>
         <Divider/>
         <CardContent>
           <Typography className={classes.title} color="textSecondary" gutterBottom>
-            {this.props.currentInitiative ?
-              'Initiative: ' + this.props.currentInitiative + ` Modifier: ${(Math.floor((this.props.character.dexterity-10)/2))<= 0 ?
-                Math.floor((this.props.character.dexterity-10)/2) :
-                '+' + Math.floor((this.props.character.dexterity-10)/2)}` :
-              `Dexterity:${this.props.character.dexterity}, Initiative Modifier: ${(Math.floor((this.props.character.dexterity-10)/2)) <= 0 ?
-                (Math.floor((this.props.character.dexterity-10)/2)) :
-                '+' + (Math.floor((this.props.character.dexterity-10)/2))}`}
+            {character.currentInitiative !== 100 ?
+              'Initiative: ' + character.currentInitiative + ` Modifier: ${character.abilityScores.dexterity.modifier<= 0 ?
+                character.abilityScores.dexterity.modifier :
+                '+' + character.abilityScores.dexterity.modifier }` :
+              `Dexterity:${character.abilityScores.dexterity.value},  Modifier: ${character.abilityScores.dexterity.modifier <= 0 ?
+                character.abilityScores.dexterity.modifier :
+                '+' + character.abilityScores.dexterity.modifier}`}
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
-            HP: {this.props.character.current_hit_points} / {this.props.character.hit_points}
+            HP: {character.current_hit_points} / {character.hit_points}
           </Typography>
           <Typography component="p">
-            {this.props.character.name}'s character info or something
+            {character.name}'s character info or something
           </Typography>
         </CardContent>
+        <Button size="small" onClick={()=>this.props.dispatch({type:'IS_DEAD', payload: character})}>kill</Button>
         {this.props.isFirst && (<CardActions>
           <Button size="small" onClick={()=>this.props.dispatch({type:'TAKE_TURN'})}>Act</Button>
           <Button size="small">hold action</Button>

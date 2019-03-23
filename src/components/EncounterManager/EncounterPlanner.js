@@ -9,7 +9,8 @@ import {
   TextField,
   Button,
 } from '@material-ui/core'
-
+import Player from '../../gameFunctions/CharacterClasses/Player'
+import NPC from '../../gameFunctions/CharacterClasses/NPC'
 import rollDice from '../../gameFunctions/rollDice'
 
 //
@@ -17,25 +18,24 @@ class EncounterPlanner extends Component {
   state = {
     characterList: [],
     characterToAdd: {
-      name: '',
+      individualName: '',
       hit_points: 0,
     },
     editorOpen: false,
   }
 
   addToEncounter = (character) => () => {
+    console.log(character)
+    let characterToAdd = character.player ? character : new NPC(character)
     this.setState({
-      characterList: [...this.state.characterList, character],
-      characterToAdd: {
-        name: '',
-        hit_points: 0,
-      },
+      ...this.state,
+      characterList: [...this.state.characterList, characterToAdd],
       editorOpen: false,
     })
   }
 
   handleClickOpen = (character) => () => {
-    this.setState({ editorOpen: true, characterToAdd: { ...character, type: character.name } });
+    this.setState({ editorOpen: true, characterToAdd: { ...character, individualName: character.name } });
   };
 
   handleClose = () => {
@@ -56,12 +56,13 @@ class EncounterPlanner extends Component {
   }
 
   rollHP = (character) => () => {
+    let roll = NPC.rollHP(this.state.characterToAdd.hit_dice, this.state.characterToAdd.abilityScores.constitution.modifier)
     this.setState({
       characterToAdd:
       {
         ...this.state.characterToAdd,
-        hit_points: (rollDice(character.hit_dice).reduce((accumulator, currentvalue) => accumulator + currentvalue)) +
-          ((Math.floor((this.state.characterToAdd.constitution - 10) / 2) * (this.state.characterToAdd.hit_dice.match(/\d+/g))[0]))
+        hit_points: roll,
+        current_hit_points: roll
       }
     })
   }
@@ -73,12 +74,12 @@ class EncounterPlanner extends Component {
         <ul>
           {this.state.characterList.map((character, index) => <li key={index}>{character.name}</li>)}
         </ul>
-        <button onClick={()=>this.props.dispatch({type:'SET_BATTLE_PARTICIPANTS',payload:this.state.characterList})}>confirm participants</button>
+        <button onClick={() => this.props.dispatch({ type: 'SET_BATTLE_PARTICIPANTS', payload: this.state.characterList })}>confirm participants</button>
         <ul>
           {this.props.characters.player.map(pc =>
             <li key={pc.id}>
               {pc.name}
-              <button onClick={this.addToEncounter({ ...pc, isPlayer: true })}>add to encounter</button>
+              <button onClick={this.addToEncounter(pc)}>add to encounter</button>
             </li>)}
         </ul>
         <ul>
@@ -96,24 +97,24 @@ class EncounterPlanner extends Component {
           <DialogContent>
             <DialogContentText>
               edit {this.state.characterToAdd.name} before adding?
-         </DialogContentText>
+            </DialogContentText>
             {<FormGroup>
               <TextField
                 label="Name"
                 type="text"
-                value={this.state.characterToAdd.name}
-                onChange={this.handleChangeFor('name', 'characterToAdd')} />
+                value={this.state.characterToAdd.individualName}
+                onChange={this.handleChangeFor('individualName', 'characterToAdd')} />
               <TextField
                 label="hit points"
-                type="number"
+                type="text"
                 value={this.state.characterToAdd.hit_points}
-                onChange={this.handleChangeFor('description', 'characterToAdd')} />
+                onChange={this.handleChangeFor('hit_points', 'characterToAdd')} />
               <Button onClick={this.rollHP(this.state.characterToAdd)}>or roll HP</Button>
             </FormGroup>}
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose}>Cancel</Button>
-            <Button onClick={this.addToEncounter({ ...this.state.characterToAdd, current_hit_points: this.state.characterToAdd.hit_points })}>Submit</Button>
+            <Button onClick={this.addToEncounter(this.state.characterToAdd)}>Submit</Button>
           </DialogActions>
 
         </Dialog>
