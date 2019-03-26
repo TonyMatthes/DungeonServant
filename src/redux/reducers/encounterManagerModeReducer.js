@@ -61,7 +61,6 @@ const manager = (state = initialManagerState, action) => {
       let orderWithNewParticipant = [...state.battleOrder]
       let newCharSpliceIndex = () => {
         for (let i = 0; i < orderWithNewParticipant.length - 1; i++) {
-          console.log(orderWithNewParticipant[i].currentInitiative, orderWithNewParticipant[i + 1].currentInitiative)
           if (orderWithNewParticipant[i].currentInitiative < orderWithNewParticipant[i + 1].currentInitiative) {
             if (newChar.currentInitiative > orderWithNewParticipant[i + 1].currentInitiative)
               return (i + 1)
