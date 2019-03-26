@@ -13,6 +13,8 @@ class InitiativeTracker extends Component {
     return (
       <>
         <button onClick={()=>this.props.dispatch({type:'SET_BATTLE_ORDER'})}>set order</button>
+        <br/>
+        <br/>
         <Grid container direction="row" alignItems="center" spacing={40}>
           {(this.props.manager.battleOrder || this.props.manager.encounterCharacters).map((character, index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={index} >
@@ -23,7 +25,7 @@ class InitiativeTracker extends Component {
                 character={character.character || character}
                 currentInitiative={character.currentInitiative}
                 //the action to take a turn
-                takeTurn={this.props.takeTurn()} />
+                takeTurn={()=>this.props.dispatch({type:'TAKE_TURN'})} />
             </Grid>
           ))}
         </Grid>

@@ -9,7 +9,7 @@ import {
   Typography,
   withStyles
 } from '@material-ui/core/';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 const styles = {
   // card: {
@@ -34,14 +34,14 @@ class CharacterCard extends Component {
     const { classes, character } = this.props;
     return (
       <Card >
-        <CardHeader className={character.player &&(classes.playerCard)} title={character.individualName || character.name } subheader={character.player || character.name}/>
-        <Divider/>
+        <CardHeader className={character.player && (classes.playerCard)} title={character.individualName || character.name} subheader={character.player || character.name} />
+        <Divider />
         <CardContent>
           <Typography className={classes.title} color="textSecondary" gutterBottom>
             {character.currentInitiative !== 100 ?
-              'Initiative: ' + character.currentInitiative + ` Modifier: ${character.abilityScores.dexterity.modifier<= 0 ?
+              'Initiative: ' + character.currentInitiative + ` Modifier: ${character.abilityScores.dexterity.modifier <= 0 ?
                 character.abilityScores.dexterity.modifier :
-                '+' + character.abilityScores.dexterity.modifier }` :
+                '+' + character.abilityScores.dexterity.modifier}` :
               `Dexterity:${character.abilityScores.dexterity.value},  Modifier: ${character.abilityScores.dexterity.modifier <= 0 ?
                 character.abilityScores.dexterity.modifier :
                 '+' + character.abilityScores.dexterity.modifier}`}
@@ -53,11 +53,15 @@ class CharacterCard extends Component {
             {character.name}'s character info or something
           </Typography>
         </CardContent>
-        <Button size="small" onClick={()=>this.props.dispatch({type:'IS_DEAD', payload: character})}>kill</Button>
-        {this.props.isFirst && (<CardActions>
-          <Button size="small" onClick={()=>this.props.dispatch({type:'TAKE_TURN'})}>Act</Button>
-          <Button size="small">hold action</Button>
-        </CardActions>)}
+        <CardActions>
+          {this.props.isFirst && (
+            <>
+              <Button size="small" onClick={() => this.props.dispatch({ type: 'TAKE_TURN' })}>Act</Button>
+              <Button size="small">hold action</Button>
+            </>
+          )}
+        <Button size="small" onClick={() => this.props.dispatch({ type: 'IS_DEAD', payload: character })}>kill</Button>
+        </CardActions>
       </Card>
     );
   }

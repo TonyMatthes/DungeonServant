@@ -115,6 +115,7 @@ class EncounterPlanner extends Component {
           <DialogActions>
             <Button onClick={this.handleClose}>Cancel</Button>
             <Button onClick={this.addToEncounter(this.state.characterToAdd)}>Submit</Button>
+            <Button onClick={()=>this.props.dispatch({type:'ADD_PARTICIPANT', payload:this.state.characterToAdd})}>Submit</Button>
           </DialogActions>
 
         </Dialog>

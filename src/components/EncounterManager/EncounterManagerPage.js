@@ -11,7 +11,6 @@ import {
 } from '@material-ui/core';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import rollInitiative from '../../gameFunctions/rollInitiative';
 import ViewSwitcher from './ViewSwitcher';
 
 const drawerWidth = 150;
@@ -49,16 +48,6 @@ class EncounterManagementPage extends Component {
     //the payload will contain the campaign number that the DM logged in has
   }
 
-  setBattleOrder = (characters) => () => {
-    this.setState({ battleOrder: rollInitiative(characters) })
-  }
-  takeTurn = () => () => {
-    this.setState({ battleOrder: this.state.battleOrder.concat(this.state.battleOrder.splice(0, 1)) })
-  }
-  confirmParticipants=(characters)=>()=>{
-    this.setState({encounterCharacters: characters })
-  }
-
   render() {
     const { classes } = this.props;
 
@@ -84,12 +73,7 @@ class EncounterManagementPage extends Component {
         </Drawer>
         <main className={classes.content}>
           {/* <pre>{JSON.stringify(this.state.battleOrder, null, 2)}</pre> */}
-          <ViewSwitcher
-            setBattleOrder={this.setBattleOrder(this.state.encounterCharacters)}
-            takeTurn={this.takeTurn}
-            battleOrder={this.state.battleOrder} 
-            encounterCharacters={this.state.encounterCharacters}
-            confirmParticipants = {this.confirmParticipants}/>
+          <ViewSwitcher/>
 
         </main>
       </div>
