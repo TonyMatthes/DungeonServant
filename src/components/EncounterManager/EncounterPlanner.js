@@ -25,8 +25,19 @@ class EncounterPlanner extends Component {
   }
 
   addToEncounter = (character) => () => {
-    console.log(character)
-    let characterToAdd = character.player ? character : new NPC(character)
+    const nPCRenamer = (char, renamingNumber = 2) => {
+      console.log(this.state.characterList.map(item => item.individualName))
+      if (!this.state.characterList.length) {
+        return char
+      } else if ((this.state.characterList.map(item => item.individualName)).includes(char.individualName)) {
+        let newNamedCharacter = ({ ...char, individualName: char.name + ' ' + renamingNumber });
+        renamingNumber++;
+        return nPCRenamer(newNamedCharacter, renamingNumber)
+      }
+      return char
+    }
+
+    let characterToAdd = character.player ? character : new NPC(nPCRenamer(this.state.characterToAdd))
     this.setState({
       ...this.state,
       characterList: [...this.state.characterList, characterToAdd],
@@ -115,7 +126,7 @@ class EncounterPlanner extends Component {
           <DialogActions>
             <Button onClick={this.handleClose}>Cancel</Button>
             <Button onClick={this.addToEncounter(this.state.characterToAdd)}>Submit</Button>
-            <Button onClick={()=>this.props.dispatch({type:'ADD_PARTICIPANT', payload:this.state.characterToAdd})}>Submit</Button>
+            <Button onClick={() => this.props.dispatch({ type: 'ADD_PARTICIPANT', payload: this.state.characterToAdd })}>Submit</Button>
           </DialogActions>
 
         </Dialog>
