@@ -38,13 +38,13 @@ class EncounterManagementPage extends Component {
 
   state = {
     battleOrder: null,
-    encounterCharacters:[],
+    encounterCharacters: [],
 
   };
 
-  componentDidMount(){
-    this.props.dispatch({type:'FETCH_NON_PLAYER_CHARACTERS'})
-    this.props.dispatch({type:'FETCH_PLAYER_CHARACTERS',payload:1})
+  componentDidMount() {
+    this.props.dispatch({ type: 'FETCH_NON_PLAYER_CHARACTERS' })
+    this.props.dispatch({ type: 'FETCH_PLAYER_CHARACTERS', payload: 1 })
     //the payload will contain the campaign number that the DM logged in has
   }
 
@@ -64,16 +64,24 @@ class EncounterManagementPage extends Component {
           <Divider />
           <List>
             {['planner', 'tracker', 'player', 'saved'].map((text, index) => (
-              <ListItem button onClick={()=>this.props.dispatch({type:'SET_ENCOUNTER_MODE',payload:text})} key={text}>
+              <ListItem button onClick={() => this.props.dispatch({ type: 'SET_ENCOUNTER_MODE', payload: text })} key={text}>
                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                 <ListItemText primary={text} />
-              </ListItem>
-            ))}
+              </ListItem>))}
+            {this.props.encounterMode.manager.battleOrder?
+            <ListItem button onClick={() => this.props.dispatch({ type: 'CLEAR_BATTLE_ORDER' })}>
+              <ListItemIcon><MailIcon /></ListItemIcon>
+              <ListItemText primary='Clear Battle Order' />
+            </ListItem>: this.props.encounterMode.manager.encounterCharacters.length >= 2?
+          <ListItem button onClick={() => this.props.dispatch({ type: 'SET_BATTLE_ORDER' })}>
+          <ListItemIcon><MailIcon /></ListItemIcon>
+          <ListItemText primary='Set Battle Order' />
+        </ListItem>:<></>}
           </List>
         </Drawer>
         <main className={classes.content}>
           {/* <pre>{JSON.stringify(this.state.battleOrder, null, 2)}</pre> */}
-          <ViewSwitcher/>
+          <ViewSwitcher />
 
         </main>
       </div>

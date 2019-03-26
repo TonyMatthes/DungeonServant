@@ -6,15 +6,10 @@ import {
 import CharacterCard from './CharacterCard';
 import { connect } from 'react-redux';
 
-//this will look a lot better later
 
 class InitiativeTracker extends Component {
   render() {
     return (
-      <>
-        <button onClick={()=>this.props.dispatch({type:'SET_BATTLE_ORDER'})}>set order</button>
-        <br/>
-        <br/>
         <Grid container direction="row" alignItems="center" spacing={40}>
           {(this.props.manager.battleOrder || this.props.manager.encounterCharacters).map((character, index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={index} >
@@ -29,7 +24,7 @@ class InitiativeTracker extends Component {
             </Grid>
           ))}
         </Grid>
-      </>
+
     );
   }
 }

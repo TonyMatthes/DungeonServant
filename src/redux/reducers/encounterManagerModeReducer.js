@@ -16,17 +16,23 @@ const initialManagerState = {
 }
 
 const manager = (state = initialManagerState, action) => {
-  const nPCRenamer = (character, renamingNumber = 2) => {
-    if (state.encounterCharacters === []) {
-      return character
-    } else if ((state.encounterCharacters.map(char => char.individualName)).includes(character.individualName)) {
-      let newNamedCharacter = new NPC({ ...character, individualName: character.name + ' ' + renamingNumber });
+  const nPCRenamer = (char, renamingNumber = 2) => {
+    console.log(state.battleOrder.map(item => item.individualName))
+    if (!state.battleOrder.length) {
+      return char
+    } else if ((state.battleOrder.map(item => item.individualName)).includes(char.individualName)) {
+      let newNamedCharacter = ({ ...char, individualName: char.name + ' ' + renamingNumber });
       renamingNumber++;
       return nPCRenamer(newNamedCharacter, renamingNumber)
     }
-    return character
+    return char
   }
   switch (action.type) {
+    case 'CLEAR_BATTLE_ORDER':
+      return {
+        ...state,
+        battleOrder: null
+      }
     case 'SET_BATTLE_ORDER':
       let finalList = []
       for (let character of state.encounterCharacters) {
@@ -50,7 +56,7 @@ const manager = (state = initialManagerState, action) => {
         battleOrder: newOrder
       }
     case 'ADD_PARTICIPANT':
-      let newChar = action.payload.player ? action.payload : new NPC(action.payload)
+      let newChar = action.payload.player ? action.payload : new NPC(nPCRenamer(action.payload))
       newChar.setInitiative(newChar.abilityCheck('dexterity'))
       let orderWithNewParticipant = [...state.battleOrder]
       let newCharSpliceIndex = () => {
@@ -76,7 +82,7 @@ const manager = (state = initialManagerState, action) => {
         return orderWithNewParticipant.length
       }
 
-      orderWithNewParticipant.splice(newCharSpliceIndex(), 0, nPCRenamer(newChar))
+      orderWithNewParticipant.splice(newCharSpliceIndex(), 0, newChar)
 
       return {
         ...state,

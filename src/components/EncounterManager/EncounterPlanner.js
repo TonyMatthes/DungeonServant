@@ -9,9 +9,7 @@ import {
   TextField,
   Button,
 } from '@material-ui/core'
-import Player from '../../gameFunctions/CharacterClasses/Player'
 import NPC from '../../gameFunctions/CharacterClasses/NPC'
-import rollDice from '../../gameFunctions/rollDice'
 
 //
 class EncounterPlanner extends Component {
@@ -87,12 +85,12 @@ class EncounterPlanner extends Component {
         </ul>
         <button onClick={() => this.props.dispatch({ type: 'SET_BATTLE_PARTICIPANTS', payload: this.state.characterList })}>confirm participants</button>
         <ul>
-          {this.props.characters.player.map(pc =>
+        {this.props.characters.player.map(pc =>
             <li key={pc.id}>
               {pc.name}
               <button onClick={this.addToEncounter(pc)}>add to encounter</button>
             </li>)}
-        </ul>
+        </ul>        
         <ul>
           {this.props.characters.nonPlayer.map(character =>
             <li key={character.name}>
@@ -124,9 +122,10 @@ class EncounterPlanner extends Component {
             </FormGroup>}
           </DialogContent>
           <DialogActions>
+            {!this.props.encounterMode.manager.battleOrder?
+            <Button onClick={this.addToEncounter(this.state.characterToAdd)}>Submit</Button>:
+            <Button onClick={() => this.props.dispatch({ type: 'ADD_PARTICIPANT', payload: this.state.characterToAdd })}>Add to current Encounter</Button>}
             <Button onClick={this.handleClose}>Cancel</Button>
-            <Button onClick={this.addToEncounter(this.state.characterToAdd)}>Submit</Button>
-            <Button onClick={() => this.props.dispatch({ type: 'ADD_PARTICIPANT', payload: this.state.characterToAdd })}>Submit</Button>
           </DialogActions>
 
         </Dialog>
@@ -135,7 +134,7 @@ class EncounterPlanner extends Component {
   }
 }
 
-const mapStateToProps = ({ characters }) => ({ characters })
+const mapStateToProps = ({ characters, encounterMode }) => ({ characters, encounterMode })
 
 export default connect(mapStateToProps)(EncounterPlanner)
 
