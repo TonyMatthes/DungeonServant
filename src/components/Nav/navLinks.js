@@ -4,8 +4,8 @@ const navLinks = [
       pathname: "/"
     },
     {
-      label: "Initiative Tracker",
-      pathname: "/InitiativeTracker"
+      label: "Encounter Manager",
+      pathname: "/EncounterManager"
     },
     {
       label: "About",

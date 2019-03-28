@@ -50,21 +50,26 @@ class CharacterCard extends Component {
             HP: {character.current_hit_points} / {character.hit_points}
           </Typography>
           <Typography component="p">
-            {character.name}'s character info or something
+            <ul>
+              {character.actions ? character.actions.map(action =>
+              <li>{action.name}, {action.desc}</li>
+                  ) :
+              <li>no actions present</li>}
+            </ul>
           </Typography>
         </CardContent>
-        <CardActions>
-          {this.props.isFirst && (
-            <>
-              <Button size="small" onClick={() => this.props.dispatch({ type: 'TAKE_TURN' })}>Act</Button>
-              <Button size="small">hold action</Button>
-            </>
-          )}
-        <Button size="small" onClick={() => this.props.dispatch({ type: 'IS_DEAD', payload: character })}>kill</Button>
-        </CardActions>
+            <CardActions>
+              {this.props.isFirst && (
+                <>
+                  <Button size="small" onClick={() => this.props.dispatch({ type: 'TAKE_TURN' })}>Act</Button>
+                  <Button size="small">hold action</Button>
+                </>
+              )}
+              <Button size="small" onClick={() => this.props.dispatch({ type: 'IS_DEAD', payload: character })}>kill</Button>
+            </CardActions>
       </Card>
-    );
-  }
-}
-
+          );
+        }
+      }
+      
 export default withStyles(styles)(connect()(CharacterCard));

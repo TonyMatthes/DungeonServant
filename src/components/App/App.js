@@ -63,7 +63,7 @@ class App extends Component {
             they will see the info page instead. */}
             <Route
               exact
-              path="/info"
+              path="/wizard"
               component={InfoPage}
             />
             {/* If none of the other routes matched, we will show a 404. */}
